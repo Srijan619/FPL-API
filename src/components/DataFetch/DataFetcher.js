@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-
+var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 const loginURL="https://fantasy.premierleague.com/"
 
 const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
@@ -27,31 +27,31 @@ class index extends Component {
         return "#" + c() + c() + c();
     }
    async componentDidMount() {
-       this.loginFPL()
+       //this.loginFPL()
        await this.fetchDetailsData();
        this.setState({isLoading:false})
 
     }
-    loginFPL(){
-        let h=new Headers();
-        h.append('Access-Control-Allow-Origin','*')
-        h.append('Accept','application/json')
-        let encoded=window.btoa('chapssrijan@gmail.com:DONTangryME123');
-        console.log(encoded)
-        h.append('Authorization','Basic '+encoded )
-        const response=fetch(loginURL,{
-            method:"GET",
-            headers:h,
-            credentials:'include'
+    // loginFPL(){
+       
+    //     let h=new Headers();
+    //     h.append("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
+    //     let encoded=window.btoa('chapssrijan@gmail.com:DONTangryME123');
+    //     console.log(encoded)
+    //     h.append('Authorization','Basic '+encoded )
+    //     const response=fetch(proxyUrl+loginURL,{
+    //         method:"GET",
+    //         headers:h,
+    //         credentials:'include'
             
-        });
-      console.log(response)
-    }
+    //     });
+    //   console.log(response)
+    // }
 
 
     async fetchInitialData() {
         this.setState({ isLoading: true })
-        const response=await fetch(League_Url);
+        const response=await fetch(proxyUrl+League_Url);
         const currentValue=await response.json();
         const myArray=currentValue.standings.results
 
@@ -64,11 +64,12 @@ class index extends Component {
     }
 
     async fetchDetailsData() {
+       
         const data = await this.fetchInitialData();
         let CustomData=[];
         const unresolvedPromise=data.map(items => {
             this.setState({ isLoading: true })
-            fetch(`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
+            fetch(proxyUrl+`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
             .then(res => {
                 if (res.ok) {
                    
