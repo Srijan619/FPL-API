@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/FPL-API/static/css/main.4befff33.chunk.css",
-    "main.js": "/FPL-API/static/js/main.cf889ff2.chunk.js",
-    "main.js.map": "/FPL-API/static/js/main.cf889ff2.chunk.js.map",
+    "main.js": "/FPL-API/static/js/main.df9cea4e.chunk.js",
+    "main.js.map": "/FPL-API/static/js/main.df9cea4e.chunk.js.map",
     "runtime-main.js": "/FPL-API/static/js/runtime-main.8b53ff86.js",
     "runtime-main.js.map": "/FPL-API/static/js/runtime-main.8b53ff86.js.map",
     "static/js/2.9d16e4a8.chunk.js": "/FPL-API/static/js/2.9d16e4a8.chunk.js",
     "static/js/2.9d16e4a8.chunk.js.map": "/FPL-API/static/js/2.9d16e4a8.chunk.js.map",
     "index.html": "/FPL-API/index.html",
-    "precache-manifest.0b661e6c890dbd5b48902f3bd97a755e.js": "/FPL-API/precache-manifest.0b661e6c890dbd5b48902f3bd97a755e.js",
+    "precache-manifest.9bfb97fd6900e627695bc8c31dbbe563.js": "/FPL-API/precache-manifest.9bfb97fd6900e627695bc8c31dbbe563.js",
     "service-worker.js": "/FPL-API/service-worker.js",
     "static/css/main.4befff33.chunk.css.map": "/FPL-API/static/css/main.4befff33.chunk.css.map",
     "static/js/2.9d16e4a8.chunk.js.LICENSE": "/FPL-API/static/js/2.9d16e4a8.chunk.js.LICENSE"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8b53ff86.js",
     "static/js/2.9d16e4a8.chunk.js",
     "static/css/main.4befff33.chunk.css",
-    "static/js/main.cf889ff2.chunk.js"
+    "static/js/main.df9cea4e.chunk.js"
   ]
 }
