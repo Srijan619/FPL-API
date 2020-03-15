@@ -59,17 +59,18 @@ class index extends Component {
 
         return (
             <DataFetcher>
-                {({ error, isLoading, details }) => {
+                {({ error, isLoading, details,details_individual }) => {
                     if (error) {
                         return <p style={{ color: "red" }}>{error.message}</p>
                     }
                     if (isLoading) {
                         return <p>Loading data....</p>
                     }
-             
+                    
                     return (
+                        
                         <div className={classes.root}>
-                          
+                          {console.log(details_individual[0])}
                             <Typography variant="h5" gutterBottom color="primary" align="center">Kokkola Cup</Typography>
                             <TableContainer component={Paper}>
                                 <Table size="small" aria-label="simple table" >
@@ -78,6 +79,7 @@ class index extends Component {
                                             <StyledTableCell>Rank</StyledTableCell>
                                             <StyledTableCell>Manager</StyledTableCell>
                                             <StyledTableCell align="right">GameWeek</StyledTableCell>
+                                            <StyledTableCell align="right">Average</StyledTableCell>
                                             <StyledTableCell align="right">Total Points</StyledTableCell>
 
                                         </TableRow>
@@ -91,6 +93,7 @@ class index extends Component {
                                                     {row.player_name}
                                                 </StyledTableCell>
                                                 <StyledTableCell align="right">{row.event_total}</StyledTableCell>
+                                                <StyledTableCell align="right">{parseInt(row.total/30)}</StyledTableCell>
                                                 <StyledTableCell align="right">{row.total}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}

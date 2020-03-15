@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 const loginURL="https://fantasy.premierleague.com/"
 
 const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
@@ -93,7 +93,7 @@ class index extends Component {
         })
        
         await Promise.all(unresolvedPromise)
-        await this.setState({
+         this.setState({
             details_individual: CustomData
         })
     }
