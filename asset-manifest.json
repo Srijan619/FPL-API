@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/FPL-API/static/css/main.4befff33.chunk.css",
-    "main.js": "/FPL-API/static/js/main.df9cea4e.chunk.js",
-    "main.js.map": "/FPL-API/static/js/main.df9cea4e.chunk.js.map",
+    "main.css": "/FPL-API/static/css/main.900e6e43.chunk.css",
+    "main.js": "/FPL-API/static/js/main.b93e83e6.chunk.js",
+    "main.js.map": "/FPL-API/static/js/main.b93e83e6.chunk.js.map",
     "runtime-main.js": "/FPL-API/static/js/runtime-main.8b53ff86.js",
     "runtime-main.js.map": "/FPL-API/static/js/runtime-main.8b53ff86.js.map",
-    "static/js/2.9d16e4a8.chunk.js": "/FPL-API/static/js/2.9d16e4a8.chunk.js",
-    "static/js/2.9d16e4a8.chunk.js.map": "/FPL-API/static/js/2.9d16e4a8.chunk.js.map",
+    "static/js/2.95a2138a.chunk.js": "/FPL-API/static/js/2.95a2138a.chunk.js",
+    "static/js/2.95a2138a.chunk.js.map": "/FPL-API/static/js/2.95a2138a.chunk.js.map",
     "index.html": "/FPL-API/index.html",
-    "precache-manifest.9bfb97fd6900e627695bc8c31dbbe563.js": "/FPL-API/precache-manifest.9bfb97fd6900e627695bc8c31dbbe563.js",
+    "precache-manifest.be54952dad6effcbf3c7b16cc240da2f.js": "/FPL-API/precache-manifest.be54952dad6effcbf3c7b16cc240da2f.js",
     "service-worker.js": "/FPL-API/service-worker.js",
-    "static/css/main.4befff33.chunk.css.map": "/FPL-API/static/css/main.4befff33.chunk.css.map",
-    "static/js/2.9d16e4a8.chunk.js.LICENSE": "/FPL-API/static/js/2.9d16e4a8.chunk.js.LICENSE"
+    "static/css/main.900e6e43.chunk.css.map": "/FPL-API/static/css/main.900e6e43.chunk.css.map",
+    "static/js/2.95a2138a.chunk.js.LICENSE": "/FPL-API/static/js/2.95a2138a.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.8b53ff86.js",
-    "static/js/2.9d16e4a8.chunk.js",
-    "static/css/main.4befff33.chunk.css",
-    "static/js/main.df9cea4e.chunk.js"
+    "static/js/2.95a2138a.chunk.js",
+    "static/css/main.900e6e43.chunk.css",
+    "static/js/main.b93e83e6.chunk.js"
   ]
 }
