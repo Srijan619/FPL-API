@@ -3,6 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Typography from '@material-ui/core/Typography'
 import DataFetcher from '../DataFetch/DataFetcher'
+import Table from '../Table';
+import Winner from '../Winner';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = theme => ({
@@ -11,6 +14,15 @@ const useStyles = theme => ({
         width: '100%',
         height: '100%'
     },
+    loading: {
+       margin:'auto',
+       width:'10%',
+       padding:theme.spacing(2)
+      },
+      table_wrapper:{
+          display:'flex',
+          justifyContent:'flex-start'
+      }
 
 });
 
@@ -35,17 +47,23 @@ class Index extends Component {
 
             <DataFetcher >
                 {({ error, isLoading, details_individual }) => {
+                    
 
                     if (error) {
                         return <p style={{ color: "red" }}>{error.message}</p>
                     }
                     if (isLoading) {
-                        return <p style={{ align:"center"}}>Loading data....</p>
+                        return   <CircularProgress className={classes.loading}/>
                     }
+                    
                     if (show) {
 
                         return (
                             <div className={classes.root}>
+                                <div className={classes.table_wrapper}>
+                                <Table data={details_individual}></Table>
+                                <Winner></Winner>
+                                </div>
                                 <Typography variant="h5" gutterBottom color="primary" align="center">Chart</Typography>
 
                               
@@ -64,7 +82,9 @@ class Index extends Component {
                         )
                     }
                     return (
-                        <div>Loading data....</div>
+                        <div className={classes.loading}>
+                        <CircularProgress />
+                      </div>
                     )
                 }}
             </DataFetcher>)

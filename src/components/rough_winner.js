@@ -130,26 +130,9 @@ class index extends Component {
                        
                     </div>
                 }
-                 <ResponsiveContainer width="80%" height={400}>
-                            <LineChart
-                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-
-                                <XAxis dataKey="event" tick={false} allowDuplicatedCategory={false} />
-                                <YAxis dataKey="points" />
-                                <Tooltip />
-                                <Legend />
-
-                                {player_details.map(item => (
-                                    <Line type="monotone" dataKey="points" data={item.points} />
-                                ))}
-                            </LineChart>
-                        </ResponsiveContainer>
-                       
+                 
             </div>
-            <LineChart width={400} height={400} data={data}>
-            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-          </LineChart>
-        )
+                    )
 
 
     }
@@ -157,6 +140,3 @@ class index extends Component {
 
 export default withStyles(useStyles)(index);
 
-{player_details.map(item => (
-    <Line type="monotone" dataKey="points" data={item.data} name={item.id} stroke={item.color} />
-))}

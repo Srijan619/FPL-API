@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DataFetcher from '../DataFetch/DataFetcher'
 
 const StyledTableCell = withStyles(theme => ({
@@ -34,6 +34,15 @@ const useStyles = theme => ({
         margin: theme.spacing(1),
         width: 'fit-content'
     },
+    loading: {
+       margin:'auto',
+       width:'10%',
+       padding:theme.spacing(2)
+      },
+    container: {
+
+        maxHeight: 400,
+      },
 
 });
 
@@ -56,23 +65,23 @@ class index extends Component {
 
     render() {
         const { classes } = this.props;
-
+        let total_gw=0;
         return (
             <DataFetcher>
-                {({ error, isLoading, details,details_individual }) => {
+                {({ error, isLoading, details}) => {
                     if (error) {
                         return <p style={{ color: "red" }}>{error.message}</p>
                     }
                     if (isLoading) {
-                        return <p>Loading data....</p>
+                        return <CircularProgress  className={classes.loading}/>
                     }
-                    
+                    total_gw=this.props.data[0]["data"].length
                     return (
                         
                         <div className={classes.root}>
-                          {console.log(details_individual[0])}
+                       
                             <Typography variant="h5" gutterBottom color="primary" align="center">Kokkola Cup</Typography>
-                            <TableContainer component={Paper}>
+                            <TableContainer component={Paper} className={classes.container}>
                                 <Table size="small" aria-label="simple table" >
                                     <TableHead className={classes.head}>
                                         <TableRow>
@@ -93,7 +102,7 @@ class index extends Component {
                                                     {row.player_name}
                                                 </StyledTableCell>
                                                 <StyledTableCell align="right">{row.event_total}</StyledTableCell>
-                                                <StyledTableCell align="right">{parseInt(row.total/30)}</StyledTableCell>
+                                                <StyledTableCell align="right">{parseInt(row.total/total_gw)}</StyledTableCell>
                                                 <StyledTableCell align="right">{row.total}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
