@@ -36,7 +36,7 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ show: true }), 2000)
+        setTimeout(() => this.setState({ show: true }), 1000)
     }
 
     render() {

@@ -11,9 +11,10 @@ import Typography from '@material-ui/core/Typography'
 import DataFetcher from '../DataFetch/DataFetcher'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 const StyledTableCell = withStyles(theme => ({
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.secondary.light,
         color: theme.palette.common.white,
     },
     body: {
@@ -31,10 +32,10 @@ const StyledTableRow = withStyles(theme => ({
 const useStyles = theme => ({
     root: {
         margin: theme.spacing(1),
-        width: 'fit-content',
+        width: '100%',
     },
     container: {
-        maxHeight: 400,
+        maxHeight: 345,
       },
     loading: {
         margin: 'auto',
@@ -54,7 +55,7 @@ class index extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ show: true }), 500)
+        setTimeout(() => this.setState({ show: true }), 3000)
     }
     render() {
         const { classes } = this.props;
@@ -85,15 +86,15 @@ class index extends Component {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {winners.map(winner=> (
-                                                    <StyledTableRow key={winner.gameWeek}>
+                                                {winners.map(win=>win.map(winner=> (
+                                                    <StyledTableRow key={winner.index}>
                                                         <StyledTableCell component="th" scope="row">{winner.name}</StyledTableCell>
                                                         <StyledTableCell component="th" scope="row" align="right">{winner.gameWeek}</StyledTableCell>
                                                         <StyledTableCell component="th" scope="row" align="right">{winner.points}</StyledTableCell>
 
 
                                                     </StyledTableRow>
-                                                ))}
+                                                )))}
 
                                             </TableBody>
                                         </Table>

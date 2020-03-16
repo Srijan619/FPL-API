@@ -15,7 +15,9 @@ class index extends Component {
             error: null,
             details: [],
             details_individual: [],
-            winners: []
+            winners: [],
+            disqualify_game:[27],
+            disqualify_id:[1958495],
         };
 
     }
@@ -28,7 +30,9 @@ class index extends Component {
     }
     async componentDidMount() {
         //this.loginFPL()
+        
         await this.fetchDetailsData();
+        setTimeout(() => { this.findWinners(this.state.disqualify_game,this.state.disqualify_id) }, 2000)
         this.setState({ isLoading: false })
 
 
@@ -101,49 +105,72 @@ class index extends Component {
             details_individual: CustomData
         })
 
-        setTimeout(() => { this.findWinners() }, 2000)
 
     }
 
-    findWinners() {
-
+    findWinners(gameweek,idet) {
+        
+        
         const cparray = this.state.details_individual; //Making a copy of the details 
-        const total_gameWeek=cparray[0]["data"].length //To get total gameweeks
-     
+        const total_gameWeek = cparray[0]["data"].length //To get total gameweeks
+
         let event_winner = []
+  
+
         let filtered_data = []
-        let gameweek_id =Array.from(Array(total_gameWeek).keys()) //Array to loop through all gameweek
+        let filtered_data_group = []
+        let count = 0;
+        
+        let gameweek_id = Array.from(Array(total_gameWeek).keys()) //Array to loop through all gameweek
         let all_winners = []
-        gameweek_id.map(ids=>{
+        gameweek_id.map(ids => {
             cparray.map((item) => {
                 const i = item["data"]
-    
+
                 i.map(points => {
-                                     
-                        if ((points["event"] === (ids+1))) {
-                            const points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
-                            const id = (item["id"])
-                            const name = (item["name"])
-                            const gameWeek = points["event"]
-                            event_winner.push({ id: id, name: name, points: points_after_transfers, gameWeek: gameWeek }) //Formatted data
-    
-                            
+
+                    if ((points["event"] === (ids + 1))) {
+                        let points_after_transfers =[]
+                        let id = []
+                        let name = []
+                        let gameWeek =[]
+                        for(var i=0;i<gameweek.length;i++){
+                            if (!(points["event"]===gameweek[i]&& item["id"]===idet[i])){  //Not goodly done, disqualify feature
+                                 points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
+                                 id = (item["id"])
+                                 name = (item["name"])
+                                 gameWeek = points["event"]
+                                 
+                            }
+
                         }
+                        event_winner.push({ id: id, name: name, points: points_after_transfers, gameWeek: gameWeek }) //Formatted data
+                    }
                 })
-    
-    
+
+
             })
-    
             const maxValue = Math.max.apply(Math, event_winner.map(function (o) { return o.points; })) //Finds max value
-            filtered_data = (event_winner.find(item => item.points === maxValue)) // Finds the winner object
-            all_winners.push(filtered_data)
+            count = event_winner.lastIndexOf(maxValue) == event_winner.indexOf(maxValue)
+            if (maxValue !== 0) {
+                filtered_data_group = (event_winner.filter(item => item.points === maxValue)) // Finds the winners object
+            }
+            all_winners.push(filtered_data_group)
             event_winner = []
-            filtered_data=[]
+            filtered_data = []
+            filtered_data_group = []
         })
-        console.log(all_winners)
+
+        // console.log(all_winners)
+        // console.log(cparray)
         this.setState({ winners: all_winners }) //Setting the data
     }
-
+    findMaximum(arr) {
+        var max = Math.max.apply(Array, arr);
+        return arr.filter(function (itm) {
+            return itm === max;
+        });
+    }
 
     render() {
         return this.props.children(this.state)

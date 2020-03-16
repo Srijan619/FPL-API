@@ -14,7 +14,7 @@ import DataFetcher from '../DataFetch/DataFetcher'
 
 const StyledTableCell = withStyles(theme => ({
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: theme. palette.success.dark,
         color: theme.palette.common.white,
     },
     body: {
@@ -41,8 +41,8 @@ const useStyles = theme => ({
       },
     container: {
 
-        maxHeight: 400,
-      },
+        maxHeight: 350,
+      }
 
 });
 
@@ -83,7 +83,7 @@ class index extends Component {
                             <Typography variant="h5" gutterBottom color="primary" align="center">Kokkola Cup</Typography>
                             <TableContainer component={Paper} className={classes.container}>
                                 <Table size="small" aria-label="simple table" >
-                                    <TableHead className={classes.head}>
+                                    <TableHead>
                                         <TableRow>
                                             <StyledTableCell>Rank</StyledTableCell>
                                             <StyledTableCell>Manager</StyledTableCell>
