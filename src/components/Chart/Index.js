@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+    LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
 import Typography from '@material-ui/core/Typography'
 import DataFetcher from '../DataFetch/DataFetcher'
 import Table from '../Table';
@@ -15,14 +17,14 @@ const useStyles = theme => ({
         height: '100%'
     },
     loading: {
-       margin:'auto',
-       width:'10%',
-       padding:theme.spacing(2)
-      },
-      table_wrapper:{
-          display:'flex',
-          justifyContent:'flex-start'
-      }
+        margin: 'auto',
+        width: '10%',
+        padding: theme.spacing(2)
+    },
+    table_wrapper: {
+        display: 'flex',
+        justifyContent: 'flex-start'
+    }
 
 });
 
@@ -31,10 +33,20 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            show: false,
+            disabled: [],
         };
     }
 
+    getStroke(key) {
+        return key === this.state.active ? 4 : 1
+    }
+    handleClick = (e) => {
+        const  dataKey  = e
+        alert("Hello" + dataKey)
+        this.setState({ active: dataKey })
+    }
+  
     componentDidMount() {
         setTimeout(() => this.setState({ show: true }), 1000)
     }
@@ -47,15 +59,15 @@ class Index extends Component {
 
             <DataFetcher >
                 {({ error, isLoading, details_individual }) => {
-                    
+
 
                     if (error) {
                         return <p style={{ color: "red" }}>{error.message}</p>
                     }
                     if (isLoading) {
-                        return   <CircularProgress className={classes.loading}/>
+                        return <CircularProgress className={classes.loading} />
                     }
-                    
+
                     if (show) {
 
                         return (
@@ -64,27 +76,27 @@ class Index extends Component {
                                 <Table data={details_individual}></Table>
                                 <Winner></Winner>
                                 </div>
-                                <Typography variant="h5" gutterBottom color="primary" align="center">Chart</Typography>
+                               <Typography variant="h5" gutterBottom color="primary" align="center">Chart</Typography>
 
-                              
+
                                 <ResponsiveContainer width="95%" height={400}>
-                                <LineChart >
+                                    <LineChart >
 
-                                <XAxis dataKey="event" tick={false} allowDuplicatedCategory={false} />
-                                <YAxis dataKey="points" />
-                                <Tooltip />
-                                <Legend />
-
-                             {details_individual.map(item=>(<Line type="monotone" dataKey="points" data={item.data} name={item.name} key={item.id} stroke={item.color} />))} 
-                            </LineChart>
-                        </ResponsiveContainer> 
+                                        <XAxis dataKey="event" tick={false} allowDuplicatedCategory={false} />
+                                        <YAxis dataKey="points" />
+                                        <Tooltip />
+                                        <Legend />      
+ 
+                                        {details_individual.map(item => (<Line type="monotone" dataKey="points" data={item.data} name={item.name} key={item.id} stroke={item.color} />  ))}
+                                    </LineChart>
+                                </ResponsiveContainer>
                             </div>
                         )
                     }
                     return (
                         <div className={classes.loading}>
-                        <CircularProgress />
-                      </div>
+                            <CircularProgress />
+                        </div>
                     )
                 }}
             </DataFetcher>)

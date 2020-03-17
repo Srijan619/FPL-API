@@ -1,9 +1,13 @@
 import { Component } from 'react';
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-const loginURL = "https://fantasy.premierleague.com/"
 
-const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+//const loginURL = "https://users.premierleague.com/accounts/login/"
+
+//const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
+const League_Url="https://fplappapi.herokuapp.com/fpl/league/407866/"
+const indi_Url="https://fplappapi.herokuapp.com/fpl/individual/"
+
 
 class index extends Component {
 
@@ -16,8 +20,8 @@ class index extends Component {
             details: [],
             details_individual: [],
             winners: [],
-            disqualify_game:[27],
-            disqualify_id:[1958495],
+            disqualify_game: [27],
+            disqualify_id: [1958495],
         };
 
     }
@@ -29,35 +33,52 @@ class index extends Component {
         return "#" + c() + c() + c();
     }
     async componentDidMount() {
-        //this.loginFPL()
-        
+        // const re = await this.loginFPL()
+
         await this.fetchDetailsData();
-        setTimeout(() => { this.findWinners(this.state.disqualify_game,this.state.disqualify_id) }, 2000)
+        setTimeout(() => { this.findWinners(this.state.disqualify_game, this.state.disqualify_id) }, 3000)
         this.setState({ isLoading: false })
 
 
+
+
     }
-    // loginFPL(){
+    // async loginFPL() {
 
-    //     let h=new Headers();
-    //     h.append("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
-    //     let encoded=window.btoa('chapssrijan@gmail.com:DONTangryME123');
-    //     console.log(encoded)
-    //     h.append('Authorization','Basic '+encoded )
-    //     const response=fetch(proxyUrl+loginURL,{
-    //         method:"GET",
-    //         headers:h,
-    //         credentials:'include'
+    //     // let h=new Headers();
+    //     // h.append("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
+    //     // let encoded=window.btoa('chapssrijan@gmail.com:DONTangryME123');
+    //     // console.log(encoded)
+    //     // h.append('Authorization','Basic '+encoded )
+    //     // const response=fetch(loginURL,{
+    //     //     method:"GET",
+    //     //     headers:h,
+    //     //     credentials:'include'
 
-    //     });
-    //   console.log(response)
+    //     // });
+     
+    //     const login_response = await fetch(loginURL, {
+    //         method: "POST",
+    //         mode: 'no-cors',
+    //         headers: {
+    //             'Access-Control-Allow-Origin': '*',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             'login': 'Chapssrijan@gmail.com',
+    //             'password': 'dontangryme',
+    //             'app': 'plfpl-web',
+    //             'redirect_uri': 'https://fantasy.premierleague.com/'
+    //         })
+    //     })
+    //     return login_response
     // }
 
 
     async fetchInitialData() {
         this.setState({ isLoading: true })
-        //const response=await fetch(proxyUrl+League_Url);
-        const response = await fetch(League_Url);
+        const response=await fetch(proxyUrl+League_Url);
+        // const response = await fetch(League_Url)
         const currentValue = await response.json();
         const myArray = currentValue.standings.results
 
@@ -72,11 +93,13 @@ class index extends Component {
     async fetchDetailsData() {
 
         const data = await this.fetchInitialData();
+      
         let CustomData = [];
         const unresolvedPromise = data.map(items => {
             this.setState({ isLoading: true })
             // fetch(proxyUrl+`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
-            fetch(`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
+            // fetch(`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
+            fetch(proxyUrl+indi_Url+items.entry)
 
                 .then(res => {
                     if (res.ok) {
@@ -108,19 +131,20 @@ class index extends Component {
 
     }
 
-    findWinners(gameweek,idet) {
-        
-        
-        const cparray = this.state.details_individual; //Making a copy of the details 
+    findWinners(gameweek, idet) {
+
+
+        const cparray = this.state.details_individual;
+        console.log(cparray) //Making a copy of the details 
         const total_gameWeek = cparray[0]["data"].length //To get total gameweeks
 
         let event_winner = []
-  
+
 
         let filtered_data = []
         let filtered_data_group = []
         let count = 0;
-        
+
         let gameweek_id = Array.from(Array(total_gameWeek).keys()) //Array to loop through all gameweek
         let all_winners = []
         gameweek_id.map(ids => {
@@ -130,17 +154,17 @@ class index extends Component {
                 i.map(points => {
 
                     if ((points["event"] === (ids + 1))) {
-                        let points_after_transfers =[]
+                        let points_after_transfers = []
                         let id = []
                         let name = []
-                        let gameWeek =[]
-                        for(var i=0;i<gameweek.length;i++){
-                            if (!(points["event"]===gameweek[i]&& item["id"]===idet[i])){  //Not goodly done, disqualify feature
-                                 points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
-                                 id = (item["id"])
-                                 name = (item["name"])
-                                 gameWeek = points["event"]
-                                 
+                        let gameWeek = []
+                        for (var i = 0; i < gameweek.length; i++) {
+                            if (!(points["event"] === gameweek[i] && item["id"] === idet[i])) {  //Not goodly done, disqualify feature
+                                points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
+                                id = (item["id"])
+                                name = (item["name"])
+                                gameWeek = points["event"]
+
                             }
 
                         }
@@ -165,12 +189,7 @@ class index extends Component {
         // console.log(cparray)
         this.setState({ winners: all_winners }) //Setting the data
     }
-    findMaximum(arr) {
-        var max = Math.max.apply(Array, arr);
-        return arr.filter(function (itm) {
-            return itm === max;
-        });
-    }
+    
 
     render() {
         return this.props.children(this.state)

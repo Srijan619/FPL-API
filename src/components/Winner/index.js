@@ -55,7 +55,7 @@ class index extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ show: true }), 3000)
+        setTimeout(() => this.setState({ show: true }), 2000)
     }
     render() {
         const { classes } = this.props;
