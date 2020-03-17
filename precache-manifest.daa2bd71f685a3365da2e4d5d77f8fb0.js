@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "52e543165347816d334cb8730749503c",
+    "revision": "7ce2cdcbf94a30d80ee1bdbaa69c6af0",
     "url": "/FPL-API/index.html"
   },
   {
-    "revision": "b886b5ea2d213756b45b",
+    "revision": "525d086b02fec8d191dd",
     "url": "/FPL-API/static/css/main.bbd6eb5f.chunk.css"
   },
   {
-    "revision": "2dced3835ac3dfde125f",
-    "url": "/FPL-API/static/js/2.95a2138a.chunk.js"
+    "revision": "8dd241f7662313f10189",
+    "url": "/FPL-API/static/js/2.4402589c.chunk.js"
   },
   {
     "revision": "e7df5ec6c9986765193824c7f118c284",
-    "url": "/FPL-API/static/js/2.95a2138a.chunk.js.LICENSE"
+    "url": "/FPL-API/static/js/2.4402589c.chunk.js.LICENSE"
   },
   {
-    "revision": "b886b5ea2d213756b45b",
-    "url": "/FPL-API/static/js/main.b1375a58.chunk.js"
+    "revision": "525d086b02fec8d191dd",
+    "url": "/FPL-API/static/js/main.e08db06d.chunk.js"
   },
   {
     "revision": "75b4a3f9f486bf4444e8",
