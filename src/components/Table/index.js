@@ -75,6 +75,7 @@ class index extends Component {
                     if (isLoading) {
                         return <CircularProgress  className={classes.loading}/>
                     }
+                   
                     total_gw=this.props.data[0]["data"].length
                     return (
                         

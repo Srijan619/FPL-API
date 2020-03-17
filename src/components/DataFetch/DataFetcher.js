@@ -5,8 +5,11 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 //const loginURL = "https://users.premierleague.com/accounts/login/"
 
 //const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
-const League_Url="https://fplappapi.herokuapp.com/fpl/league/407866/"
-const indi_Url="https://fplappapi.herokuapp.com/fpl/individual/"
+// const League_Url = "https://fplappapi.herokuapp.com/fpl/league/407866/"
+// const indi_Url = "https://fplappapi.herokuapp.com/fpl/individual/"
+
+const League_Url = "http://127.0.0.1:8000/fpl/league/407866/";
+const indi_Url = "http://127.0.0.1:8000/fpl/individual/"
 
 
 class index extends Component {
@@ -22,6 +25,7 @@ class index extends Component {
             winners: [],
             disqualify_game: [27],
             disqualify_id: [1958495],
+           
         };
 
     }
@@ -33,8 +37,6 @@ class index extends Component {
         return "#" + c() + c() + c();
     }
     async componentDidMount() {
-        // const re = await this.loginFPL()
-
         await this.fetchDetailsData();
         setTimeout(() => { this.findWinners(this.state.disqualify_game, this.state.disqualify_id) }, 3000)
         this.setState({ isLoading: false })
@@ -56,7 +58,7 @@ class index extends Component {
     //     //     credentials:'include'
 
     //     // });
-     
+
     //     const login_response = await fetch(loginURL, {
     //         method: "POST",
     //         mode: 'no-cors',
@@ -77,15 +79,14 @@ class index extends Component {
 
     async fetchInitialData() {
         this.setState({ isLoading: true })
-        const response=await fetch(proxyUrl+League_Url);
-        // const response = await fetch(League_Url)
+        const response= await fetch(League_Url);
         const currentValue = await response.json();
         const myArray = currentValue.standings.results
 
         this.setState({
             details: myArray, error: response.error
         })
-        return await myArray
+        return  myArray
 
 
     }
@@ -93,17 +94,13 @@ class index extends Component {
     async fetchDetailsData() {
 
         const data = await this.fetchInitialData();
-      
+
         let CustomData = [];
         const unresolvedPromise = data.map(items => {
             this.setState({ isLoading: true })
-            // fetch(proxyUrl+`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
-            // fetch(`https://fantasy.premierleague.com/api/entry/${items.entry}/history/`)
-            fetch(proxyUrl+indi_Url+items.entry)
-
+            fetch((indi_Url + (items.entry+"/")))
                 .then(res => {
                     if (res.ok) {
-
                         return res.json()
                     } else {
                         throw Error("Error fetching data!")
@@ -132,7 +129,6 @@ class index extends Component {
     }
 
     findWinners(gameweek, idet) {
-
 
         const cparray = this.state.details_individual;
         console.log(cparray) //Making a copy of the details 
@@ -175,7 +171,7 @@ class index extends Component {
 
             })
             const maxValue = Math.max.apply(Math, event_winner.map(function (o) { return o.points; })) //Finds max value
-            count = event_winner.lastIndexOf(maxValue) == event_winner.indexOf(maxValue)
+            count = event_winner.lastIndexOf(maxValue) === event_winner.indexOf(maxValue)
             if (maxValue !== 0) {
                 filtered_data_group = (event_winner.filter(item => item.points === maxValue)) // Finds the winners object
             }
@@ -189,7 +185,7 @@ class index extends Component {
         // console.log(cparray)
         this.setState({ winners: all_winners }) //Setting the data
     }
-    
+
 
     render() {
         return this.props.children(this.state)

@@ -38,14 +38,6 @@ class Index extends Component {
         };
     }
 
-    getStroke(key) {
-        return key === this.state.active ? 4 : 1
-    }
-    handleClick = (e) => {
-        const  dataKey  = e
-        alert("Hello" + dataKey)
-        this.setState({ active: dataKey })
-    }
   
     componentDidMount() {
         setTimeout(() => this.setState({ show: true }), 1000)

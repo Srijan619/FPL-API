@@ -53,13 +53,10 @@ class index extends Component {
             show: false,
         };
     }
-
-    componentDidMount() {
-        setTimeout(() => this.setState({ show: true }), 2000)
-    }
     render() {
         const { classes } = this.props;
         const { show } = this.state
+        
         return (
             <div>
                 <DataFetcher>
@@ -70,8 +67,6 @@ class index extends Component {
                         if (isLoading) {
                             return <CircularProgress className={classes.loading} />
                         }
-                        if (show) {
-
                             return (
                                 <div className={classes.root}>
                                     <Typography variant="h5" gutterBottom color="primary" align="center">Winners</Typography>
@@ -102,12 +97,7 @@ class index extends Component {
 
                                 </div>
                             )
-                        }
-                        return (
-                            <div className={classes.loading}>
-                                <CircularProgress />
-                            </div>
-                        )
+                       
                     }}
 
                 </DataFetcher>
