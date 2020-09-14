@@ -10,7 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
 import DataFetcher from '../DataFetch/DataFetcher'
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -32,7 +33,7 @@ const StyledTableRow = withStyles(theme => ({
 const useStyles = theme => ({
     root: {
         margin: theme.spacing(1),
-        width: '100%',
+        width: 'fit-content',
     },
     container: {
         maxHeight: 345,
@@ -42,6 +43,14 @@ const useStyles = theme => ({
         width: '10%',
         padding: theme.spacing(2)
     },
+    
+     card: {
+       width:'fit-content'
+      },
+      
+      title: {
+        fontSize: 20,
+      },
 
 });
 
@@ -69,7 +78,9 @@ class index extends Component {
                         }
                             return (
                                 <div className={classes.root}>
-                                    <Typography variant="h5" gutterBottom color="primary" align="center">Winners</Typography>
+                                    <Card className={classes.card}>
+                                <CardContent>
+                                    <Typography className={classes.title} color="textSecondary" gutterBottom >Winners</Typography>
                                     <TableContainer component={Paper} className={classes.container}>
                                         <Table stickyHeader size="small" aria-label="simple table" >
                                             <TableHead className={classes.head}>
@@ -94,6 +105,8 @@ class index extends Component {
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
+                                    </CardContent>
+                                    </Card>
 
                                 </div>
                             )

@@ -5,7 +5,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 //const loginURL = "https://users.premierleague.com/accounts/login/"
 
 //const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
-const League_Url = "https://fplappapi.herokuapp.com/fpl/league/407866/"
+const League_Url = "https://fplappapi.herokuapp.com/fpl/league/220929/"
 const indi_Url = "https://fplappapi.herokuapp.com/fpl/individual/"
 // 
 // const League_Url = "http://127.0.0.1:8000/fpl/league/407866/";
@@ -45,38 +45,6 @@ class index extends Component {
 
 
     }
-    // async loginFPL() {
-
-    //     // let h=new Headers();
-    //     // h.append("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
-    //     // let encoded=window.btoa('chapssrijan@gmail.com:DONTangryME123');
-    //     // console.log(encoded)
-    //     // h.append('Authorization','Basic '+encoded )
-    //     // const response=fetch(loginURL,{
-    //     //     method:"GET",
-    //     //     headers:h,
-    //     //     credentials:'include'
-
-    //     // });
-
-    //     const login_response = await fetch(loginURL, {
-    //         method: "POST",
-    //         mode: 'no-cors',
-    //         headers: {
-    //             'Access-Control-Allow-Origin': '*',
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             'login': 'Chapssrijan@gmail.com',
-    //             'password': 'dontangryme',
-    //             'app': 'plfpl-web',
-    //             'redirect_uri': 'https://fantasy.premierleague.com/'
-    //         })
-    //     })
-    //     return login_response
-    // }
-
-
     async fetchInitialData() {
         this.setState({ isLoading: true })
         const response= await fetch(League_Url);

@@ -8,13 +8,15 @@ import DataFetcher from '../DataFetch/DataFetcher'
 import Table from '../Table';
 import Winner from '../Winner';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 
 const useStyles = theme => ({
     root: {
         margin: theme.spacing(1),
         width: '100%',
-        height: '100%'
+        height: 'fit-content'
     },
     loading: {
         margin: 'auto',
@@ -22,10 +24,20 @@ const useStyles = theme => ({
         padding: theme.spacing(2)
     },
     table_wrapper: {
+        marginRight: theme.spacing(1),
         display: 'flex',
-        justifyContent: 'flex-start'
+        justifyContent:'space-between'
     }
+    ,
+    card: {
+        width:'95%',
+        margin: theme.spacing(1),
+        backgroundColor:"#ede7f6",
+    },
 
+    title: {
+        fontSize: 20,
+    },
 });
 
 
@@ -38,7 +50,7 @@ class Index extends Component {
         };
     }
 
-  
+
     componentDidMount() {
         setTimeout(() => this.setState({ show: true }), 1000)
     }
@@ -65,23 +77,24 @@ class Index extends Component {
                         return (
                             <div className={classes.root}>
                                 <div className={classes.table_wrapper}>
-                                <Table data={details_individual}></Table>
-                                <Winner></Winner>
+                                    <Table data={details_individual}></Table>
+                                    <Winner></Winner>
                                 </div>
-                               <Typography variant="h5" gutterBottom color="primary" align="center">Chart</Typography>
+                                <Card className={classes.card}>
+                                    <CardContent>
+                                        <Typography className={classes.title} color="textSecondary" gutterBottom  align="center">Chart</Typography>
+                                        <ResponsiveContainer width="95%" height={400}>
+                                            <LineChart >
 
+                                                <XAxis dataKey="event" tick={false} allowDuplicatedCategory={false} />
+                                                <YAxis dataKey="points" />
+                                                <Tooltip />
+                                                <Legend />
 
-                                <ResponsiveContainer width="95%" height={400}>
-                                    <LineChart >
+                                                {details_individual.map(item => (<Line type="monotone" dataKey="points" data={item.data} name={item.name} key={item.id} stroke={item.color} />))}
+                                            </LineChart>
+                                        </ResponsiveContainer></CardContent></Card>
 
-                                        <XAxis dataKey="event" tick={false} allowDuplicatedCategory={false} />
-                                        <YAxis dataKey="points" />
-                                        <Tooltip />
-                                        <Legend />      
- 
-                                        {details_individual.map(item => (<Line type="monotone" dataKey="points" data={item.data} name={item.name} key={item.id} stroke={item.color} />  ))}
-                                    </LineChart>
-                                </ResponsiveContainer>
                             </div>
                         )
                     }
