@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/FPL-API/static/css/main.bbd6eb5f.chunk.css",
-    "main.js": "/FPL-API/static/js/main.7079fb3e.chunk.js",
+    "main.css": "/FPL-API/static/css/main.0a61d6fe.chunk.css",
+    "main.js": "/FPL-API/static/js/main.86c71e2d.chunk.js",
     "runtime-main.js": "/FPL-API/static/js/runtime-main.8b53ff86.js",
-    "static/js/2.4402589c.chunk.js": "/FPL-API/static/js/2.4402589c.chunk.js",
+    "static/js/2.37c65d79.chunk.js": "/FPL-API/static/js/2.37c65d79.chunk.js",
     "index.html": "/FPL-API/index.html",
-    "precache-manifest.345f4c2b912284edac37f878c7cf70ce.js": "/FPL-API/precache-manifest.345f4c2b912284edac37f878c7cf70ce.js",
+    "precache-manifest.1a07594c3a8a4e98a3a3044733ae9802.js": "/FPL-API/precache-manifest.1a07594c3a8a4e98a3a3044733ae9802.js",
     "service-worker.js": "/FPL-API/service-worker.js",
-    "static/js/2.4402589c.chunk.js.LICENSE": "/FPL-API/static/js/2.4402589c.chunk.js.LICENSE"
+    "static/js/2.37c65d79.chunk.js.LICENSE": "/FPL-API/static/js/2.37c65d79.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.8b53ff86.js",
-    "static/js/2.4402589c.chunk.js",
-    "static/css/main.bbd6eb5f.chunk.css",
-    "static/js/main.7079fb3e.chunk.js"
+    "static/js/2.37c65d79.chunk.js",
+    "static/css/main.0a61d6fe.chunk.css",
+    "static/js/main.86c71e2d.chunk.js"
   ]
 }
