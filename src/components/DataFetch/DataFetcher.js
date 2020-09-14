@@ -5,7 +5,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 //const loginURL = "https://users.premierleague.com/accounts/login/"
 
 //const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
-const League_Url = "https://fplappapi.herokuapp.com/fpl/league/407866/"
+const League_Url = "https://fplappapi.herokuapp.com/fpl/league/220929/"
 const indi_Url = "https://fplappapi.herokuapp.com/fpl/individual/"
 // 
 // const League_Url = "http://127.0.0.1:8000/fpl/league/407866/";
