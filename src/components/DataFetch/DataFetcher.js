@@ -1,16 +1,10 @@
 import { Component } from 'react';
+//const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 
+const all_leagues = "https://fplappapi.herokuapp.com/fpl/allLeague/779926/"
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-//const loginURL = "https://users.premierleague.com/accounts/login/"
-
-//const League_Url = "https://fantasy.premierleague.com/api/leagues-classic/407866/standings/?page_new_entries=1&page_standings=1&phase=1";
-const League_Url = "https://fplappapi.herokuapp.com/fpl/league/220929/"
-const indi_Url = "https://fplappapi.herokuapp.com/fpl/individual/"
-// 
-// const League_Url = "http://127.0.0.1:8000/fpl/league/407866/";
-// const indi_Url = "http://127.0.0.1:8000/fpl/individual/"
-
+const url = "https://fplappapi.herokuapp.com/fpl/league/220929/"
+// League_Url:"https://fplappapi.herokuapp.com/fpl/league/220929/"
 
 class index extends Component {
 
@@ -23,50 +17,66 @@ class index extends Component {
             details: [],
             details_individual: [],
             winners: [],
-            disqualify_game: [27],
-            disqualify_id: [1958495],
-           
+            leagues: [],
+            League_Url: "https://fplappapi.herokuapp.com/fpl/league/458631/",
+            indi_Url: "https://fplappapi.herokuapp.com/fpl/individual/",
+            LeagueName:"Jeppis"
+
         };
 
     }
+
     get_random_color() {
         function c() {
             var hex = Math.floor(Math.random() * 256).toString(16);
             return ("0" + String(hex)).substr(-2); // pad with zero
         }
+
         return "#" + c() + c() + c();
     }
     async componentDidMount() {
         await this.fetchDetailsData();
-        setTimeout(() => { this.findWinners(this.state.disqualify_game, this.state.disqualify_id) }, 3000)
+        setTimeout(() => this.findWinners(), 3000);
         this.setState({ isLoading: false })
 
-
-
-
     }
+
     async fetchInitialData() {
         this.setState({ isLoading: true })
-        const response= await fetch(League_Url);
+        const response = await fetch(this.state.League_Url);
         const currentValue = await response.json();
         const myArray = currentValue.standings.results
 
         this.setState({
-            details: myArray, error: response.error
+            details: myArray, error: response.error, isLoading: false
         })
-        return  myArray
+        return myArray
 
 
     }
 
+    async fetchLeagueData() {
+
+        this.setState({ isLoading: true })
+        const response = await fetch(all_leagues);
+        const currentValue = await response.json();
+        const myArray = currentValue.leagues.classic
+        this.setState({
+            leagues: myArray, error: response.error, isLoading: false
+        })
+    }
+
+
+
     async fetchDetailsData() {
 
         const data = await this.fetchInitialData();
+        await this.fetchLeagueData();
 
         let CustomData = [];
         const unresolvedPromise = data.map(items => {
             this.setState({ isLoading: true })
-            fetch((indi_Url + (items.entry+"/")))
+            fetch((this.state.indi_Url + (items.entry + "/")))
                 .then(res => {
                     if (res.ok) {
                         return res.json()
@@ -96,56 +106,52 @@ class index extends Component {
 
     }
 
-    findWinners(gameweek, idet) {
+    findWinners() {
 
         const cparray = this.state.details_individual;
-        console.log(cparray) //Making a copy of the details 
+
         const total_gameWeek = cparray[0]["data"].length //To get total gameweeks
 
         let event_winner = []
 
 
-        let filtered_data = []
         let filtered_data_group = []
-        let count = 0;
+
 
         let gameweek_id = Array.from(Array(total_gameWeek).keys()) //Array to loop through all gameweek
         let all_winners = []
+
         gameweek_id.map(ids => {
             cparray.map((item) => {
                 const i = item["data"]
-
+                let points_after_transfers = []
+                let id = []
+                let name = []
+                let gameWeek = []
                 i.map(points => {
 
                     if ((points["event"] === (ids + 1))) {
-                        let points_after_transfers = []
-                        let id = []
-                        let name = []
-                        let gameWeek = []
-                        for (var i = 0; i < gameweek.length; i++) {
-                            if (!(points["event"] === gameweek[i] && item["id"] === idet[i])) {  //Not goodly done, disqualify feature
-                                points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
-                                id = (item["id"])
-                                name = (item["name"])
-                                gameWeek = points["event"]
+                        points_after_transfers = (points["points"]) - (points["event_transfers_cost"])
+                        id = item["id"]
+                        name = item["name"]
+                        gameWeek = points["event"]
 
-                            }
 
-                        }
-                        event_winner.push({ id: id, name: name, points: points_after_transfers, gameWeek: gameWeek }) //Formatted data
                     }
-                })
+                    event_winner.push({ id: id, name: name, points: points_after_transfers, gameWeek: gameWeek }) //Formatted data
+                }
+                )
 
 
             })
+
             const maxValue = Math.max.apply(Math, event_winner.map(function (o) { return o.points; })) //Finds max value
-            count = event_winner.lastIndexOf(maxValue) === event_winner.indexOf(maxValue)
+
             if (maxValue !== 0) {
                 filtered_data_group = (event_winner.filter(item => item.points === maxValue)) // Finds the winners object
             }
             all_winners.push(filtered_data_group)
             event_winner = []
-            filtered_data = []
             filtered_data_group = []
         })
 
@@ -153,9 +159,15 @@ class index extends Component {
         this.setState({ winners: all_winners }) //Setting the data
     }
 
+    setUrl() {
 
+        this.setState({LeagueName:"Kokkola"},()=>{console.log(this.state.LeagueName)})
+    }
     render() {
-        return this.props.children(this.state)
+        return this.props.children({
+            ...this.state,
+            actions: this.setUrl.bind(this)
+        })
 
     }
 }

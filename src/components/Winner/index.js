@@ -93,7 +93,9 @@ class index extends Component {
                                             </TableHead>
                                             <TableBody>
                                                 {winners.map(win=>win.map(winner=> (
+                                                 
                                                     <StyledTableRow key={winner.index}>
+                                                        
                                                         <StyledTableCell component="th" scope="row">{winner.name}</StyledTableCell>
                                                         <StyledTableCell component="th" scope="row" align="right">{winner.gameWeek}</StyledTableCell>
                                                         <StyledTableCell component="th" scope="row" align="right">{winner.points}</StyledTableCell>

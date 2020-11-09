@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -42,15 +41,16 @@ const useStyles = theme => ({
         padding: theme.spacing(2)
     },
     container: {
-        width: "fit-content"
+        width: "fit-content",
+        maxHeight: 300
     },
-     card: {
-       width:'fit-content'
-      },
-      
-      title: {
+    card: {
+        width: 'fit-content'
+    },
+
+    title: {
         fontSize: 20,
-      },
+    },
 });
 
 function ProgressIcon(props) {
@@ -61,74 +61,72 @@ function ProgressIcon(props) {
     );
 }
 
-class index extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
 
-        };
-    }
+function Index(props) {
+
+    const [record, setRecord] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [totalgw,setTotalgw] = useState(0);
+    const {classes} =props;
+    
+    
+    useEffect(() => {
+      
+        (async function () {
+        
+            const response = await fetch("https://fplappapi.herokuapp.com/fpl/league/"+props.leagueId+"/");
+            const data = await response.json();
+            const item = data.standings.results;
+            setRecord(item);
+            setTotalgw(1)
+            setLoading(false);
+        })();
+    }, [props.leagueId])
+
+    return (
+       
+        <div className={classes.root}>
+            {
+            loading ?<CircularProgress className={classes.loading} />: 
+         
+           
+        <Card className={classes.card}>
+            <CardContent>
+                <Typography className={classes.title} color="textSecondary" gutterBottom key={props.leagueName} >{props.leagueName}</Typography>
+                <TableContainer component={Paper} className={classes.container}>
+                    <Table stickyHeader size="small" aria-label="simple table" >
+                        <TableHead className={classes.head}>
+                            <TableRow>
+                                <StyledTableCell>Rank</StyledTableCell>
+                                <StyledTableCell>Manager</StyledTableCell>
+                                <StyledTableCell align="right">GameWeek</StyledTableCell>
+                                <StyledTableCell align="right">Average</StyledTableCell>
+                                <StyledTableCell align="right">Total Points</StyledTableCell>
+
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {record.map(row => (
+                                <StyledTableRow key={row.id}>
+                                    <StyledTableCell >{(row.last_rank < row.rank) ? (<ProgressIcon color="red"></ProgressIcon>) : (row.last_rank === row.rank) ? (<ProgressIcon color="grey"></ProgressIcon>) : (row.last_rank > row.rank) ? (<ProgressIcon color="green"></ProgressIcon>) : null}
+                                        {row.rank}</StyledTableCell>
+                                    <StyledTableCell component="th" scope="row">
+                                        {row.player_name}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right">{row.event_total}</StyledTableCell>
+                                    <StyledTableCell align="right">{parseInt(row.total / totalgw)}</StyledTableCell>
+                                    <StyledTableCell align="right">{row.total}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </CardContent>
+        </Card>
+ }
+    </div>
+    );
+}
 
 
-    render() {
-        const { classes } = this.props;
-        let total_gw = 0;
-        return (
-            <DataFetcher>
-                {({ error, isLoading, details }) => {
-                    if (error) {
-                        return <p style={{ color: "red" }}>{error.message}</p>
-                    }
-                    if (isLoading) {
-                        return <CircularProgress className={classes.loading} />
-                    }
-
-                    total_gw = this.props.data[0]["data"].length
-                    return (
-
-                        <div className={classes.root}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom >Kokkola Cup</Typography>
-                                <TableContainer component={Paper} className={classes.container}>
-                                    <Table size="small" aria-label="simple table" >
-                                        <TableHead className={classes.head}>
-                                            <TableRow>
-                                                <StyledTableCell>Rank</StyledTableCell>
-                                                <StyledTableCell>Manager</StyledTableCell>
-                                                <StyledTableCell align="right">GameWeek</StyledTableCell>
-                                                <StyledTableCell align="right">Average</StyledTableCell>
-                                                <StyledTableCell align="right">Total Points</StyledTableCell>
-
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {details.map(row => (
-                                                <StyledTableRow key={row.id}>
-                                                    <StyledTableCell >{(row.last_rank < row.rank) ? (<ProgressIcon color="red"></ProgressIcon>) : (row.last_rank === row.rank) ? (<ProgressIcon color="grey"></ProgressIcon>) : (row.last_rank > row.rank) ? (<ProgressIcon color="green"></ProgressIcon>) : null}
-                                                        {row.rank}</StyledTableCell>
-                                                    <StyledTableCell component="th" scope="row">
-                                                        {row.player_name}
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="right">{row.event_total}</StyledTableCell>
-                                                    <StyledTableCell align="right">{parseInt(row.total / total_gw)}</StyledTableCell>
-                                                    <StyledTableCell align="right">{row.total}</StyledTableCell>
-                                                </StyledTableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                </CardContent>
-                               </Card>
-
-                        </div>
-                    )
-                }}
-            </DataFetcher>
-                    )
-
-
-                }
-                }
-
-export default withStyles(useStyles)(index);
+export default withStyles(useStyles)(Index);

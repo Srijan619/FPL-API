@@ -1,16 +1,19 @@
 import React from 'react';
-import './App.css';
+
 import Table from './Table';
 import Chart from  './Chart/Index.js';
 import Winner from  './Winner';
-
+import Login from './Login';
+import League from './League';
 
 function App() {
   return (
-    <div className="App">
-
-      <Chart></Chart>
+    <div >
+   <League></League>
+      {/* <Chart></Chart>  */}
       {/* <Winner></Winner> */}
+      {/* <Login></Login> */}
+      
     </div>
   );
 }

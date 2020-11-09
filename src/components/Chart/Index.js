@@ -10,6 +10,7 @@ import Winner from '../Winner';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import League from '../League';
 
 
 const useStyles = theme => ({
@@ -26,7 +27,7 @@ const useStyles = theme => ({
     table_wrapper: {
         marginRight: theme.spacing(1),
         display: 'flex',
-        justifyContent:'space-between'
+        flexDirection:'row'
     }
     ,
     card: {
@@ -77,6 +78,7 @@ class Index extends Component {
                         return (
                             <div className={classes.root}>
                                 <div className={classes.table_wrapper}>
+                                    <League></League>
                                     <Table data={details_individual}></Table>
                                     <Winner></Winner>
                                 </div>
